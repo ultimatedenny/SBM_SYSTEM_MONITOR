@@ -1,0 +1,21 @@
+﻿@{
+    Layout = "~/Views/Shared/AspStudio/_Layout_Detail_New.cshtml";
+    ViewBag.Title = "Detail";
+}
+<!-- Add this in your HTML -->
+
+
+<style>
+    body {
+        margin: 0;
+    }
+    iframe {
+        display: block;
+        background: #ffffff;
+        border: none;
+        height: calc(100vh - 3.75rem);
+        width: 100%;
+    }
+</style>
+
+<iframe id="iframepowerbi" src="@ViewBag.REPORT_URL"></iframe>

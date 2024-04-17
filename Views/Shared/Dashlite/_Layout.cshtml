@@ -1,0 +1,319 @@
+﻿@{
+    string ROLE = @ViewBag.GROUPS_MDM;
+}
+<!DOCTYPE html>
+<html lang="zxx" class="js">
+
+<head>
+    <base href=".~/Theme/DASHLITE/demo1/src/">
+    <meta charset="utf-8">
+    <meta name="author" content="DENI ANDREAN">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="DENI ANDREAN">
+    <link rel="shortcut icon" type="image/x-icon" href="~/Theme/RFQ/LOGO1.png">
+    <title>@ViewBag.Title - SBM SYSTEM MONITOR</title>
+    <link rel="stylesheet" href="~/Theme/DASHLITE/demo1/src/assets/css/dashlite.css">
+    <link rel="stylesheet" href="~/Theme/DASHLITE/demo1/src/assets/css/theme.css">
+    <link rel="stylesheet" href="~/Theme/DASHLITE/demo1/src/assets/css/skins/theme-blue.css">
+    @Scripts.Render("~/bundles/jquery")
+    <script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+    <script src="https://code.highcharts.com/highcharts-3d.js"></script>
+    <script src="https://code.highcharts.com/modules/stock.js"></script>
+    <script src="https://code.highcharts.com/maps/modules/map.js"></script>
+    <script src="https://code.highcharts.com/modules/gantt.js"></script>
+    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/modules/parallel-coordinates.js"></script>
+    <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+    <script src="https://code.highcharts.com/modules/annotations-advanced.js"></script>
+    <script src="https://code.highcharts.com/modules/data.js"></script>
+    <script src="https://code.highcharts.com/modules/draggable-points.js"></script>
+    <script src="https://code.highcharts.com/modules/static-scale.js"></script>
+    <script src="https://code.highcharts.com/modules/broken-axis.js"></script>
+    <script src="https://code.highcharts.com/modules/heatmap.js"></script>
+    <script src="https://code.highcharts.com/modules/tilemap.js"></script>
+    <script src="https://code.highcharts.com/modules/timeline.js"></script>
+    <script src="https://code.highcharts.com/modules/treemap.js"></script>
+    <script src="https://code.highcharts.com/modules/treegraph.js"></script>
+    <script src="https://code.highcharts.com/modules/item-series.js"></script>
+    <script src="https://code.highcharts.com/modules/drilldown.js"></script>
+    <script src="https://code.highcharts.com/modules/histogram-bellcurve.js"></script>
+    <script src="https://code.highcharts.com/modules/bullet.js"></script>
+    <script src="https://code.highcharts.com/modules/funnel.js"></script>
+    <script src="https://code.highcharts.com/modules/funnel3d.js"></script>
+    <script src="https://code.highcharts.com/modules/pyramid3d.js"></script>
+    <script src="https://code.highcharts.com/modules/networkgraph.js"></script>
+    <script src="https://code.highcharts.com/modules/pareto.js"></script>
+    <script src="https://code.highcharts.com/modules/pattern-fill.js"></script>
+    <script src="https://code.highcharts.com/modules/price-indicator.js"></script>
+    <script src="https://code.highcharts.com/modules/sankey.js"></script>
+    <script src="https://code.highcharts.com/modules/arc-diagram.js"></script>
+    <script src="https://code.highcharts.com/modules/dependency-wheel.js"></script>
+    <script src="https://code.highcharts.com/modules/series-label.js"></script>
+    <script src="https://code.highcharts.com/modules/solid-gauge.js"></script>
+    <script src="https://code.highcharts.com/modules/sonification.js"></script>
+    <script src="https://code.highcharts.com/modules/stock-tools.js"></script>
+    <script src="https://code.highcharts.com/modules/streamgraph.js"></script>
+    <script src="https://code.highcharts.com/modules/sunburst.js"></script>
+    <script src="https://code.highcharts.com/modules/variable-pie.js"></script>
+    <script src="https://code.highcharts.com/modules/variwide.js"></script>
+    <script src="https://code.highcharts.com/modules/vector.js"></script>
+    <script src="https://code.highcharts.com/modules/venn.js"></script>
+    <script src="https://code.highcharts.com/modules/windbarb.js"></script>
+    <script src="https://code.highcharts.com/modules/wordcloud.js"></script>
+    <script src="https://code.highcharts.com/modules/xrange.js"></script>
+    <script src="https://code.highcharts.com/modules/no-data-to-display.js"></script>
+    <script src="https://code.highcharts.com/modules/drag-panes.js"></script>
+    <script src="https://code.highcharts.com/modules/debugger.js"></script>
+    <script src="https://code.highcharts.com/modules/dumbbell.js"></script>
+    <script src="https://code.highcharts.com/modules/lollipop.js"></script>
+    <script src="https://code.highcharts.com/modules/cylinder.js"></script>
+    <script src="https://code.highcharts.com/modules/organization.js"></script>
+    <script src="https://code.highcharts.com/modules/dotplot.js"></script>
+    <script src="https://code.highcharts.com/modules/marker-clusters.js"></script>
+    <script src="https://code.highcharts.com/modules/hollowcandlestick.js"></script>
+    <script src="https://code.highcharts.com/modules/heikinashi.js"></script>
+
+</head>
+
+<body class="nk-body bg-lighter npc-general has-sidebar">
+    <div class="nk-app-root">
+        <div class="nk-main ">
+            <div class="nk-sidebar nk-sidebar-fixed is-theme" data-content="sidebarMenu">
+                <div class="nk-sidebar-element nk-sidebar-head">
+                    <div class="nk-menu-trigger">
+                        <a href="#" class="nk-nav-toggle nk-quick-nav-icon d-xl-none" data-target="sidebarMenu"><em class="icon ni ni-arrow-left"></em></a>
+                        <a href="#" class="nk-nav-compact nk-quick-nav-icon d-none d-xl-inline-flex" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
+                    </div>
+                    <div class="nk-sidebar-brand">
+                        <a href="~/Theme/DASHLITE/demo1/src/html/index.html" class="logo-link nk-sidebar-logo">
+                            <h6 style="color:white">SBM SYSTEM MONITOR</h6>
+                        </a>
+                    </div>
+                </div>
+                <div class="nk-sidebar-element nk-sidebar-body">
+                    <div class="nk-sidebar-content">
+                        <div class="nk-sidebar-menu" data-simplebar>
+                            <ul class="nk-menu">
+                                <li class="nk-menu-heading">
+                                    <h6 class="overline-title text-primary-alt">Server</h6>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a href="@Url.Action("QA", "Report")" class="nk-menu-link">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-line-chart"></em></span>
+                                        <span class="nk-menu-text">DEVELOPMENT<br />(172.18.100.172)</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a href="@Url.Action("PRD", "Report")" class="nk-menu-link">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-line-chart"></em></span>
+                                        <span class="nk-menu-text">PRODUCTION<br />(172.18.100.84)</span>
+                                    </a>
+                                </li>
+                                <li class="nk-menu-item">
+                                    <a href="@Url.Action("PRODUCTION_PUB", "Report")" class="nk-menu-link">
+                                        <span class="nk-menu-icon"><em class="icon ni ni-line-chart"></em></span>
+                                        <span class="nk-menu-text">PRODUCTION (PUBLISH)<br />(0.0.0.0)</span>
+                                        <span class="nk-menu-badge">OFFLINE</span>
+                                    </a>
+                                </li>
+
+                                @if (ROLE == "SYSTEM-ADMINA" || ROLE == "SUPER-ADMINA" || ROLE == "SYSTEM-MANAGERA")
+                                {
+                                    <li class="nk-menu-heading">
+                                        <h6 class="overline-title text-primary-alt">Master Data</h6>
+                                    </li>
+
+                                    <li class="nk-menu-item">
+                                        <a href="@Url.Action("Category", "MasterData")" class="nk-menu-link">
+                                            <span class="nk-menu-icon"><em class="icon ni ni-bookmark"></em></span>
+                                            <span class="nk-menu-text">Category</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nk-menu-item">
+                                        <a href="@Url.Action("Department", "MasterData")" class="nk-menu-link">
+                                            <span class="nk-menu-icon"><em class="icon ni ni-user-group"></em></span>
+                                            <span class="nk-menu-text">Department</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nk-menu-item">
+                                        <a href="@Url.Action("Group", "MasterData")" class="nk-menu-link">
+                                            <span class="nk-menu-icon"><em class="icon ni ni-link-group"></em></span>
+                                            <span class="nk-menu-text">Group</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nk-menu-item">
+                                        <a href="@Url.Action("UserDC", "MasterData")" class="nk-menu-link">
+                                            <span class="nk-menu-icon"><em class="icon ni ni-user"></em></span>
+                                            <span class="nk-menu-text">User</span>
+                                        </a>
+                                    </li>
+
+                                    <li class="nk-menu-item">
+                                        <a href="@Url.Action("Report", "MasterData")" class="nk-menu-link">
+                                            <span class="nk-menu-icon"><em class="icon ni ni-bar-chart"></em></span>
+                                            <span class="nk-menu-text">Report</span>
+                                        </a>
+                                    </li>
+                                
+                                    <li class="nk-menu-heading">
+                                        <h6 class="overline-title text-primary-alt">Setting</h6>
+                                    </li>
+
+                                    <li class="nk-menu-item">
+                                        <a href="@Url.Action("Index", "Profile")" class="nk-menu-link">
+                                            <span class="nk-menu-icon"><em class="icon ni ni-user"></em></span>
+                                            <span class="nk-menu-text">User Setting</span>
+                                        </a>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nk-wrap ">
+                <div class="nk-header nk-header-fixed is-theme">
+                    <div class="container-fluid">
+                        <div class="nk-header-wrap">
+                            <div class="nk-menu-trigger d-xl-none ms-n1">
+                                <a href="#" class="nk-nav-toggle nk-quick-nav-icon" data-target="sidebarMenu"><em class="icon ni ni-menu"></em></a>
+                            </div>
+                            <div class="nk-header-brand d-xl-none">
+                                <a href="html/index.html" class="logo-link">
+                                    <h6 style="color:white">SBM SYSTEM MONITOR</h6>
+                                </a>
+                            </div>
+                            <div class="nk-header-news d-none d-xl-block">
+
+                            </div>
+                            <div class="nk-header-tools">
+                                <ul class="nk-quick-nav">
+
+                                    <li class="dropdown user-dropdown">
+                                        <a href="#" class="dropdown-toggle" data-bs-toggle="dropdown">
+                                            <div class="user-toggle">
+                                                <div class="user-avatar sm">
+                                                    <em class="icon ni ni-user-alt"></em>
+                                                </div>
+                                                <div class="user-info d-none d-md-block">
+                                                    <div class="user-status">@ViewBag.GROUPS_PBI</div>
+                                                    <div class="user-name dropdown-indicator">@ViewBag.NAME</div>
+                                                </div>
+                                            </div>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-end dropdown-menu-s1">
+                                            <div class="dropdown-inner user-card-wrap bg-lighter d-none d-md-block">
+                                                <div class="user-card">
+                                                    <div class="user-avatar">
+                                                        <span>@ViewBag.INITIALS</span>
+                                                    </div>
+                                                    <div class="user-info">
+                                                        <span class="lead-text">@ViewBag.NAME</span>
+                                                        <span class="sub-text">@ViewBag.GROUPS_PBI (@ViewBag.DEPARTMENT)</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="dropdown-inner">
+                                                <ul class="link-list">
+                                                    <li><a class="dark-switch" href="#"><em class="icon ni ni-moon"></em><span>Dark Mode</span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="dropdown-inner">
+                                                <ul class="link-list">
+                                                    <li><a href="@Url.Action("Logout", "Authentication")"><em class="icon ni ni-signout"></em><span>Sign out</span></a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="nk-content ">
+                    <div class="container-fluid">
+                        <div class="nk-content-inner">
+                            <div class="nk-content-body">
+                                @RenderBody()
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="nk-footer">
+                    <div class="container-fluid">
+                        <div class="nk-footer-wrap">
+                            <div class="nk-footer-copyright">
+                                Copyright &copy; 1991 - @DateTime.Now.ToString("yyyy") <b>PT SHIMANO BATAM</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/bundle.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/scripts.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/charts/gd-default.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/charts/gd-analytics.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/charts/gd-invest.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/example-sweetalert.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/example-toastr.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/libs/dual-listbox.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/libs/jstree.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/example-tree.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/libs/editors/quill.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/libs/editors/summernote.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/libs/editors/tinymce.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/editors.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/libs/datatable-btns.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/libs/fullcalendar.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/apps/calendar.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/libs/jkanban.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/apps/kanban.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/libs/jqvmap.js"></script>
+    <script src="~/Theme/DASHLITE/demo1/src/assets/js/libs/tagify.js"></script>
+    <script src="https://unpkg.com/isotope-layout@3/dist/isotope.pkgd.js"></script>
+    <script src="https://malsup.github.io/jquery.blockUI.js"></script>
+    <script src="~/Theme/bootstrap-multiselect.min.js"></script>
+
+
+    <script>
+
+        $(document).ajaxStop($.unblockUI);
+
+        $(document).ajaxComplete(function () {
+            $.unblockUI()
+        });
+
+        $(document).ajaxStart(function () {
+            $.blockUI({
+                css: {
+                    width: '350px',
+                    top: '10px',
+                    left: '',
+                    right: '10px',
+                    border: 'none',
+                    padding: '5px',
+                    backgroundColor: '#F2F2F2',
+                    '-webkit-border-radius': '10px',
+                    '-moz-border-radius': '10px',
+                    opacity: .6,
+                    color: '#060606'
+                }
+            });
+        }); 
+
+        function CALL_NOTIF(Msg) {
+            alert(Msg)
+        }
+        
+    </script>
+</body>
+
+</html>

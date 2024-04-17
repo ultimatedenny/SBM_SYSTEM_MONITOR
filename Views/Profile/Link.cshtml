@@ -1,0 +1,204 @@
+﻿@{
+    Layout = "~/Views/Shared/Dashlite/_Layout.cshtml";
+    ViewBag.Title = "Manage Link";
+}
+<div class="nk-content-inner">
+    <div class="nk-content-body">
+        <div class="nk-block">
+            <div class="card card-bordered">
+                <div class="card-aside-wrap">
+                    <div class="card-inner card-inner-lg">
+                        <div class="nk-block-head nk-block-head-lg">
+                            <div class="nk-block-between">
+                                <div class="nk-block-head-content">
+                                    <h4 class="nk-block-title">Manage Links</h4>
+                                    <div class="nk-block-des">
+                                        <p>Manage Standard and TV links.</p>
+                                    </div>
+                                </div>
+                                <div class="nk-block-head-content align-self-start d-lg-none">
+                                    <a href="#" class="toggle btn btn-icon btn-trigger mt-n1" data-target="userAside"><em class="icon ni ni-menu-alt-r"></em></a>
+                                </div>
+                            </div>
+                        </div><!-- .nk-block-head -->
+                        <div class="nk-block">
+                            <div class="nk-data data-list">
+                                <div class="data-head">
+                                    <h6 class="overline-title">My Links</h6>
+                                </div>
+
+                                <table id="table_1" class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>TYPE</th>
+                                            <th>EXPIRE</th>
+                                            <th>REPORT</th>
+                                            <th>ACTION</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+
+                            </div>
+
+                        </div>
+
+                        <div class="nk-block">
+                            <div class="nk-data data-list">
+                                <div class="data-head">
+                                    <h6 class="overline-title">Who access my Link</h6>
+                                </div>
+                                <table id="table_2" class="table text-nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th>IP</th>
+                                            <th>MACHINE NAME</th>
+                                            <th>DATE TIME</th>
+                                            <th>REPORT</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="card-aside card-aside-left user-aside toggle-slide toggle-slide-left toggle-break-lg toggle-screen-lg" data-toggle-body="true" data-content="userAside" data-toggle-screen="lg" data-toggle-overlay="true">
+                        <div class="card-inner-group" data-simplebar="init">
+                            <div class="simplebar-wrapper" style="margin: 0px;">
+                                <div class="simplebar-height-auto-observer-wrapper"><div class="simplebar-height-auto-observer"></div></div><div class="simplebar-mask">
+                                    <div class="simplebar-offset" style="right: 0px; bottom: 0px;">
+                                        <div class="simplebar-content-wrapper" tabindex="0" role="region" aria-label="scrollable content" style="height: auto; overflow: hidden;">
+                                            <div class="simplebar-content" style="padding: 0px;">
+                                                <div class="card-inner">
+                                                    <div class="user-card">
+                                                        <div class="user-avatar bg-primary">
+                                                            <span>@ViewBag.INITIALS</span>
+                                                        </div>
+                                                        <div class="user-info">
+                                                            <span class="lead-text">@ViewBag.NAME</span>
+                                                            <span class="sub-text">@ViewBag.EMAIL</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="card-inner p-0">
+                                                    <ul class="link-list-menu">
+                                                        <li><a href="@Url.Action("Index","Profile")"><em class="icon ni ni-user-fill-c"></em><span>Personal Infomation</span></a></li>
+                                                        <li><a class="active" href="@Url.Action("Link","Profile")"><em class="icon ni ni-link-h"></em><span>Manage Link</span></a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><div class="simplebar-placeholder" style="width: auto; height: 504px;"></div>
+                            </div><div class="simplebar-track simplebar-horizontal" style="visibility: hidden;"><div class="simplebar-scrollbar" style="width: 0px; display: none;"></div></div><div class="simplebar-track simplebar-vertical" style="visibility: hidden;"><div class="simplebar-scrollbar" style="height: 0px; display: none;"></div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        GET_MY_LINK();
+        GET_MY_LOG_LINK();
+    });
+    function GET_MY_LINK() {
+        var URL = "@Url.Action("GET_MY_LINK", "PROFILE")";
+        var attr = {
+            "responsive": {
+                "details": false
+            },
+            "scrollX": false,
+            "autoWidth": true,
+            //columnDefs: [
+            //    { width: '80px', targets: '_all' } // Set width to 150px for all columns
+            //],
+            "dom": "<\"row justify-between g-2 with-export\"<\"col-7 col-sm-4 text-start\"f><\"col-5 col-sm-8 text-end\"<\"datatable-filter\"<\"d-flex justify-content-end g-2\"<\"dt-export-buttons d-flex align-center\"<\"dt-export-title d-none d-md-inline-block\">B>l>>>><\"datatable-wrap my-3\"t><\"row align-items-center\"<\"col-7 col-sm-12 col-md-9\"p><\"col-5 col-sm-12 col-md-3 text-start text-md-end\"i>>",
+            "language": {
+                "search": "",
+                "searchPlaceholder": "Type in to Search",
+                "lengthMenu": "<span class='d-none d-sm-inline-block'>Show</span><div class='form-control-select'> _MENU_ </div>",
+                "info": "_START_ -_END_ of _TOTAL_",
+                "infoEmpty": "0",
+                "infoFiltered": "( Total _MAX_  )",
+                "paginate": {
+                    "first": "First",
+                    "last": "Last",
+                    "next": "Next",
+                    "previous": "Prev"
+                }
+            },
+            "ajax": {
+                "url": URL,
+                "type": "GET",
+                "datatype": "json",
+                "data": function (a) {
+                    return $.extend({}, a, {});
+                }
+            },
+            "columns": [
+                { "data": 'URL_TYPE' },
+                { "data": 'URL_EXPI' },
+                { "data": 'REPORT_NAME' },
+                {
+                    "render": function (data, type, full, meta) {
+                        var DEL_BTN = '<a onclick="COPY_VALUE(\'' + full.URL_TEXT + '\')" class="btn btn-dim btn-icon btn-sm btn-secondary"><em class="icon ni ni-copy"></em></a>';
+                        return DEL_BTN;
+                    }
+                },
+            ]
+        };
+        $("#table_1").DataTable(attr);
+    }
+
+    function GET_MY_LOG_LINK() {
+        var URL = "@Url.Action("GET_MY_LOG_LINK", "PROFILE")";
+        var attr = {
+            "responsive": {
+                "details": false
+            },
+            "scrollX": false,
+            "autoWidth": true,
+            //columnDefs: [
+            //    { width: '80px', targets: '_all' } // Set width to 150px for all columns
+            //],
+            "dom": "<\"row justify-between g-2 with-export\"<\"col-7 col-sm-4 text-start\"f><\"col-5 col-sm-8 text-end\"<\"datatable-filter\"<\"d-flex justify-content-end g-2\"<\"dt-export-buttons d-flex align-center\"<\"dt-export-title d-none d-md-inline-block\">B>l>>>><\"datatable-wrap my-3\"t><\"row align-items-center\"<\"col-7 col-sm-12 col-md-9\"p><\"col-5 col-sm-12 col-md-3 text-start text-md-end\"i>>",
+            "language": {
+                "search": "",
+                "searchPlaceholder": "Type in to Search",
+                "lengthMenu": "<span class='d-none d-sm-inline-block'>Show</span><div class='form-control-select'> _MENU_ </div>",
+                "info": "_START_ -_END_ of _TOTAL_",
+                "infoEmpty": "0",
+                "infoFiltered": "( Total _MAX_  )",
+                "paginate": {
+                    "first": "First",
+                    "last": "Last",
+                    "next": "Next",
+                    "previous": "Prev"
+                }
+            },
+            "ajax": {
+                "url": URL,
+                "type": "GET",
+                "datatype": "json",
+                "data": function (a) {
+                    return $.extend({}, a, {});
+                }
+            },
+            "columns": [
+                { "data": 'ID' },
+                { "data": 'URL_TEXT' },
+                { "data": 'URL_EXPI' },
+                { "data": 'REPORT_NAME' },
+            ]
+        };
+        $("#table_2").DataTable(attr);
+    }
+
+
+    function COPY_VALUE(VALUE) {
+        navigator.clipboard.writeText(VALUE);
+        alert("Copied to your clipboard");
+    }
+
+</script>

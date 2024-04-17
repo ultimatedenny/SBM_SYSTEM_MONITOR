@@ -1,0 +1,900 @@
+﻿
+@{
+    Layout = "~/Views/Shared/Dashlite/_Layout.cshtml";
+}
+
+<style>
+    .highcharts-figure,
+    .highcharts-data-table table {
+        min-width: 310px;
+        max-width: 800px;
+        margin: 1em auto;
+    }
+
+    #container {
+        height: 400px;
+    }
+
+    .highcharts-data-table table {
+        font-family: Verdana, sans-serif;
+        border-collapse: collapse;
+        border: 1px solid #ebebeb;
+        margin: 10px auto;
+        text-align: center;
+        width: 100%;
+        max-width: 500px;
+    }
+
+    .highcharts-data-table caption {
+        padding: 1em 0;
+        font-size: 1.2em;
+        color: #555;
+    }
+
+    .highcharts-data-table th {
+        font-weight: 600;
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table td,
+    .highcharts-data-table th,
+    .highcharts-data-table caption {
+        padding: 0.5em;
+    }
+
+    .highcharts-data-table thead tr,
+    .highcharts-data-table tr:nth-child(even) {
+        background: #f8f8f8;
+    }
+
+    .highcharts-data-table tr:hover {
+        background: #f1f7ff;
+    }
+</style>
+<div class="nk-block-head nk-block-head-sm">
+    <div class="nk-block-between">
+        <div class="nk-block-head-content">
+            <h3 class="nk-block-title page-title">SERVER @ViewBag.Title</h3>
+            <div class="nk-block-des text-soft">
+                <p>@ViewBag.Subtitle</p>
+            </div>
+        </div>
+        <div class="nk-block-head-content">
+            <div class="toggle-wrap nk-block-tools-toggle">
+                <div class="form-group">
+                    <div class="form-control-wrap">
+                        <select class="form-select js-select2" data-search="on" id="FILTER_PERIOD" onchange="FILTER_ONCHANGE()">
+                            <option value="THIS_MONTH">This Month</option>
+                            <option value="LAST_MONTH">Last Month</option>
+                            <option value="LAST_3_MONTH">Last 3 Month</option>
+                            <option value="LAST_6_MONTH">Last 6 Month</option>
+                            <option value="LAST_12_MONTH">Last 12 Month</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="nk-block">
+    <div class="row g-gs">
+        <div class="col-xxl-12">
+            <div class="row g-gs">
+                <div class="col-lg-6 col-xxl-3">
+                    <div class="card card-bordered">
+                        <div class="card-inner">
+                            <div class="card-title-group align-start mb-2">
+                                <div class="card-title">
+                                    <h6 class="title">Total Request</h6>
+                                </div>
+                                <div class="card-tools">
+                                    <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Represents the total count of requests captured within the dataset. Each entry corresponds to an individual request made in the specified context or timeframe."></em>
+                                </div>
+                            </div>
+                            <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                <div class="nk-sale-data" id="TR">
+                                    <span class="amount">0</span>
+                                    <span class="sub-title"><span class="change text-secondary" id="TR_PER"> 0%</span>compared to filter period</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xxl-3">
+                    <div class="card card-bordered">
+                        <div class="card-inner">
+                            <div class="card-title-group align-start mb-2">
+                                <div class="card-title">
+                                    <h6 class="title">Uniqe Source IP</h6>
+                                </div>
+                                <div class="card-tools">
+                                    <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Indicates the count of unique source IP addresses within the dataset. Each IP address corresponds to a distinct origin point in the network."></em>
+                                </div>
+                            </div>
+                            <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                <div class="nk-sale-data" id="IS">
+                                    <span class="amount">0</span>
+                                    <span class="sub-title"><span class="change text-secondary" id="IS_PER"> 0%</span>compared to filter period</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xxl-3">
+                    <div class="card card-bordered">
+                        <div class="card-inner">
+                            <div class="card-title-group align-start mb-2">
+                                <div class="card-title">
+                                    <h6 class="title">Uniqe Destination IP</h6>
+                                </div>
+                                <div class="card-tools">
+                                    <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="Displays the count of unique destination IP addresses for the selected dataset. Each IP address represents a distinct endpoint in the network."></em>
+                                </div>
+                            </div>
+                            <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                <div class="nk-sale-data" id="ID">
+                                    <span class="amount">0</span>
+                                    <span class="sub-title"><span class="change text-secondary" id="ID_PER"> 0%</span>compared to filter period</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xxl-3">
+                    <div class="card card-bordered">
+                        <div class="card-inner">
+                            <div class="card-title-group align-start mb-2">
+                                <div class="card-title">
+                                    <h6 class="title">Total Abnormal Activity</h6>
+                                </div>
+                                <div class="card-tools">
+                                    <em class="card-hint icon ni ni-help-fill" data-bs-toggle="tooltip" data-bs-placement="left" title="???"></em>
+                                </div>
+                            </div>
+                            <div class="align-end flex-sm-wrap g-4 flex-md-nowrap">
+                                <div class="nk-sale-data" id="ID">
+                                    <span class="amount">0</span>
+                                    <span class="sub-title"><span class="change text-secondary" id="ID_PER"> 0%</span>compared to filter period</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-12">
+            <div class="row g-gs">
+                <div class="col-lg-6 col-xxl-6">
+                    <div class="card card-bordered">
+                        <div class="card-inner" id="card_chart1" style="max-height: 550px;">
+                            <div class="card-title-group align-start mb-2">
+                                <div class="card-title">
+                                    <h6 class="title">List Visitor</h6>
+                                    <p>In the range of filter period from server @ViewBag.Title</p>
+                                </div>
+                                <div class="card-tools">
+
+                                </div>
+                            </div>
+                            <div class="align-end gy-3 gx-5 flex-wrap flex-md-nowrap flex-lg-wrap flex-xxl-nowrap">
+                                <div id="container_chart1" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xxl-6">
+                    <div class="card card-bordered">
+                        <div class="card-inner" id="card_chart1" style="max-height: 550px;">
+                            <div class="card-title-group align-start mb-2">
+                                <div class="card-title">
+                                    <h6 class="title">Visitor Total Request By Methode</h6>
+                                    <p>In the range of filter period from server @ViewBag.Title</p>
+                                </div>
+                                <div class="card-tools">
+
+                                </div>
+                            </div>
+                            <div class="align-end gy-3 gx-5 flex-wrap flex-md-nowrap flex-lg-wrap flex-xxl-nowrap">
+                                <div id="container_chart2" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-12">
+            <div class="row g-gs">
+                <div class="col-lg-6 col-xxl-6">
+                    <div class="card card-bordered">
+                        <div class="card-inner" id="card_chart1" style="max-height: 550px;">
+                            <div class="card-title-group align-start mb-2">
+                                <div class="card-title">
+                                    <h6 class="title">Total Load Current Month by Day</h6>
+                                    <p>In the range of filter period from server @ViewBag.Title</p>
+                                </div>
+                                <div class="card-tools">
+
+                                </div>
+                            </div>
+                            <div class="align-end gy-3 gx-5 flex-wrap flex-md-nowrap flex-lg-wrap flex-xxl-nowrap">
+                                <div id="container_chart3" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xxl-6">
+                    <div class="card card-bordered">
+                        <div class="card-inner" id="card_chart1" style="max-height: 550px;">
+                            <div class="card-title-group align-start mb-2">
+                                <div class="card-title">
+                                    <h6 class="title">Acumulate Peak Hour</h6>
+                                    <p>In the range of filter period from server @ViewBag.Title</p>
+                                </div>
+                                <div class="card-tools">
+
+                                </div>
+                            </div>
+                            <div class="align-end gy-3 gx-5 flex-wrap flex-md-nowrap flex-lg-wrap flex-xxl-nowrap">
+                                <div id="container_chart4" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xxl-12">
+            <div class="row g-gs">
+                <div class="col-lg-6 col-xxl-6">
+                    <div class="card card-bordered">
+                        <div class="card-inner" id="card_chart1" style="max-height: 550px;">
+                            <div class="card-title-group align-start mb-2">
+                                <div class="card-title">
+                                    <h6 class="title">Total Request by Application</h6>
+                                    <p>In the range of filter period from server @ViewBag.Title</p>
+                                </div>
+                                <div class="card-tools">
+
+                                </div>
+                            </div>
+                            <div class="align-end gy-3 gx-5 flex-wrap flex-md-nowrap flex-lg-wrap flex-xxl-nowrap">
+                                <div id="container_chart5" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-xxl-6">
+                    <div class="card card-bordered">
+                        <div class="card-inner" id="card_chart1" style="max-height: 550px;">
+                            <div class="card-title-group align-start mb-2">
+                                <div class="card-title">
+                                    <h6 class="title">Total Request by User Agent</h6>
+                                    <p>In the range of filter period from server @ViewBag.Title</p>
+                                </div>
+                                <div class="card-tools">
+
+                                </div>
+                            </div>
+                            <div class="align-end gy-3 gx-5 flex-wrap flex-md-nowrap flex-lg-wrap flex-xxl-nowrap">
+                                <div id="container_chart6" style="width: 100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        SNIFFER_GETHEADER();
+        GET_DATA_CHART();
+    });
+    function FILTER_ONCHANGE() {
+        SNIFFER_GETHEADER();
+        GET_DATA_CHART();
+    }
+    function getRandomColor() {
+        var letters = '0123456789ABCDEF';
+        var color = '#';
+        for (var i = 0; i < 6; i++) {
+            color += letters[Math.floor(Math.random() * 16)];
+        }
+        return color;
+    }
+
+    function SNIFFER_GETHEADER() {
+        var URL = "@Url.Action("GETHEADER", "MASTERDATA")";
+        var MODEL = {
+            IP: '',
+            NAME: '@ViewBag.Title',
+            FILTER_PERIOD: $('#FILTER_PERIOD').val()
+        };
+        console.log(MODEL);
+        $.ajax({
+            type: "POST",
+            url: URL,
+            data: JSON.stringify({ MODEL: MODEL }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                var trPerValueTR = data.data.Data[0].TR_PER;
+                if (trPerValueTR === "" || trPerValueTR === "0%") {
+                    document.getElementById("TR").innerHTML =
+                        ` <span class="amount">` + data.data.Data[0].TR_TM + `</span>
+           <span class="sub-title"><span class="change text-secondary" id="TR_PER">`+ trPerValueTR + `</span>compared to filter period</span>`
+                } else {
+                    if (trPerValueTR.includes("-")) {
+                        document.getElementById("TR").innerHTML =
+                            ` <span class="amount">` + data.data.Data[0].TR_TM + `</span>
+               <span class="sub-title"><span class="change down text-danger" id="TR_PER"><em class="icon ni ni-arrow-long-down"></em>`+ trPerValueTR + `</span>compared to filter period</span>`;
+                    } else {
+                        document.getElementById("TR").innerHTML =
+                            ` <span class="amount">` + data.data.Data[0].TR_TM + `</span>
+               <span class="sub-title"><span class="change up text-success" id="TR_PER"><em class="icon ni ni-arrow-long-up"></em>`+ trPerValueTR + `</span>compared to filter period</span>`;
+                    }
+                }
+
+                var trPerValueIS = data.data.Data[0].IS_PER;
+                if (trPerValueIS === "" || trPerValueIS === "0%") {
+                    document.getElementById("IS").innerHTML =
+                        ` <span class="amount">` + data.data.Data[0].IS_TM +`</span>
+                          <span class="sub-title"><span class="change text-secondary" id="IS_PER">`+ trPerValueIS +`</span>compared to filter period</span>`
+                } else {
+                    if (trPerValueIS.includes("-")) {
+                        document.getElementById("IS").innerHTML =
+                            ` <span class="amount">` + data.data.Data[0].IS_TM + `</span>
+                              <span class="sub-title"><span class="change down text-danger" id="IS_PER"><em class="icon ni ni-arrow-long-down"></em>`+ trPerValueIS + `</span>compared to filter period</span>`;
+                    } else {
+                        document.getElementById("IS").innerHTML =
+                            ` <span class="amount">` + data.data.Data[0].IS_TM + `</span>
+                              <span class="sub-title"><span class="change up text-success" id="IS_PER"><em class="icon ni ni-arrow-long-up"></em>`+ trPerValueIS + `</span>compared to filter period</span>`;
+                    }
+                }
+
+                var trPerValueID = data.data.Data[0].ID_PER;
+                if (trPerValueID === "" || trPerValueID === "0%") {
+                    document.getElementById("ID").innerHTML =
+                        ` <span class="amount">` + data.data.Data[0].ID_TM + `</span>
+                        <span class="sub-title"><span class="change text-secondary" id="ID_PER">`+ trPerValueID + `</span>compared to filter period</span>`
+                } else {
+                    if (trPerValueID.includes("-")) {
+                        document.getElementById("ID").innerHTML =
+                            ` <span class="amount">` + data.data.Data[0].ID_TM + `</span>
+                            <span class="sub-title"><span class="change down text-danger" id="ID_PER"><em class="icon ni ni-arrow-long-down"></em>`+ trPerValueID + `</span>compared to filter period</span>`;
+                    } else {
+                        document.getElementById("ID").innerHTML =
+                            ` <span class="amount">` + data.data.Data[0].ID_TM + `</span>
+                            <span class="sub-title"><span class="change up text-success" id="ID_PER"><em class="icon ni ni-arrow-long-up"></em>`+ trPerValueID + `</span>compared to filter period</span>`;
+                    }
+                }
+            },
+            error: function (request, status, error) {
+
+            }
+        });
+    }
+
+    function GET_DATA_CHART() {
+        var URL = "@Url.Action("GET_DATA_CHART", "MASTERDATA")";
+        var MODEL = {
+            IP: '',
+            NAME: '@ViewBag.Title',
+            FILTER_PERIOD: $('#FILTER_PERIOD').val()
+        };
+        console.log(MODEL);
+        $.ajax({
+            type: "POST",
+            url: URL,
+            data: JSON.stringify({ MODEL: MODEL }),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (data) {
+                ////////////////////////////////////////////////////////////////////////////////////////
+                var ipArray = [];
+                var requestCountArray = [];
+                var colorArray = [];
+                for (var i = 0; i < data.data.Data[0].CHART_1.length; i++) {
+                    ipArray.push(data.data.Data[0].CHART_1[i].SOURCE_IP);
+                    requestCountArray.push(parseInt(data.data.Data[0].CHART_1[i].REQUESTCOUNT));
+                    colorArray.push(getRandomColor());
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////
+                var SOURCE_IP = [];
+                var ACTIVITY_COUNT_GET = [];
+                var ACTIVITY_COUNT_POST = [];
+                var ACTIVITY_COUNT_AVG = [];
+                for (var i = 0; i < data.data.Data[0].CHART_2.length; i++) {
+                    SOURCE_IP.push(data.data.Data[0].CHART_2[i].SOURCE_IP);
+                    if (data.data.Data[0].CHART_2[i].METHODE === "GET") {
+                        ACTIVITY_COUNT_GET.push(parseInt(data.data.Data[0].CHART_2[i].ACTIVITY_COUNT));
+                    }
+                    if (data.data.Data[0].CHART_2[i].METHODE === "POST") {
+                        ACTIVITY_COUNT_POST.push(parseInt(data.data.Data[0].CHART_2[i].ACTIVITY_COUNT));
+                    }
+                }
+                var distinctSourceIP = [...new Set(SOURCE_IP)];
+                for (var i = 0; i < distinctSourceIP.length; i++) {
+                    var GET = parseFloat(ACTIVITY_COUNT_GET[i]);
+                    var POST = parseFloat(ACTIVITY_COUNT_POST[i]);
+                    ACTIVITY_COUNT_AVG.push((GET + POST) / 2);
+                }
+                var sumGET = ACTIVITY_COUNT_GET.reduce(function (accumulator, currentValue) {
+                    return accumulator + currentValue;
+                }, 0);
+                var sumPOST = ACTIVITY_COUNT_POST.reduce(function (accumulator, currentValue) {
+                    return accumulator + currentValue;
+                }, 0);
+                var _xAxismax = 0;
+                if (data.data.Data.length > 4) {
+                    _xAxismax = 4;
+                } else if (data.data.Data.length > 3) {
+                    _xAxismax = 3;
+                } else if (data.data.Data.length == 3) {
+                    _xAxismax = 2;
+                } else if (data.data.Data.length == 2) {
+                    _xAxismax = 1;
+                } else {
+                    _xAxismax = 0;
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////
+                const currentMonthWeekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+                const sqlData = [];
+                for (var i = 0; i < data.data.Data[0].CHART_3.length; i++) {
+                    sqlData.push({ Date: data.data.Data[0].CHART_3[i].DATE, TotalRecords: parseInt(data.data.Data[0].CHART_3[i].TOTALREQUEST) });
+                }
+                const currentMonthChartData = sqlData.map(entry => {
+                    const date = entry.Date;
+                    const day = parseInt(date.split('-')[2]);
+                    const temperature = entry.TotalRecords;
+                    return {
+                        x: (day - 1) % 7,
+                        y: 5 - Math.floor((day - 1) / 7),
+                        value: temperature,
+                        date: new Date(date).getTime(),
+                        custom: {
+                            monthDay: day
+                        }
+                    };
+                });
+                ////////////////////////////////////////////////////////////////////////////////////////
+                var TimeStart = [];
+                var TimeEnd = [];
+                var ActivityCount = [];
+                var ActivityGet = [];
+                var ActivityPost = [];
+                var ActivityOther = [];
+                colorArray = [];
+                for (var i = 0; i < data.data.Data[0].CHART_4.length; i++) {
+                    TimeStart.push(data.data.Data[0].CHART_4[i].TimeStart);
+                    TimeEnd.push(data.data.Data[0].CHART_4[i].TimeEnd);
+                    ActivityCount.push(parseInt(data.data.Data[0].CHART_4[i].ActivityCount));
+                    ActivityGet.push(parseInt(data.data.Data[0].CHART_4[i].ActivityGet));
+                    ActivityPost.push(parseInt(data.data.Data[0].CHART_4[i].ActivityPost));
+                    ActivityOther.push(parseInt(data.data.Data[0].CHART_4[i].ActivityOther));
+                    colorArray.push(getRandomColor());
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////
+                var APP_NAME = [];
+                var TOTAL_REQUEST = [];
+                colorArray = [];
+                for (var i = 0; i < data.data.Data[0].CHART_5.length; i++) {
+                    APP_NAME.push(data.data.Data[0].CHART_5[i].APP_NAME);
+                    TOTAL_REQUEST.push(parseInt(data.data.Data[0].CHART_5[i].TOTAL_REQUEST));
+                    colorArray.push(getRandomColor());
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////
+                var USERAGENT = [];
+                var TOTAL_REQUEST_2 = [];
+                var colorArray = [];
+                for (var i = 0; i < data.data.Data[0].CHART_6.length; i++) {
+                    USERAGENT.push(data.data.Data[0].CHART_6[i].USERAGENT);
+                    TOTAL_REQUEST_2.push(parseInt(data.data.Data[0].CHART_6[i].TOTAL_REQUEST));
+                    colorArray.push(getRandomColor());
+                }
+                ////////////////////////////////////////////////////////////////////////////////////////
+                Highcharts.chart('container_chart1', {
+                    chart: {
+                        type: 'bar',
+                        height: 450,
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    title: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: ipArray,
+                        min: 1,
+                        max: 15,
+                        scrollbar: {
+                            enabled: true
+                        },
+                    },
+                    yAxis: {
+                        title: {
+                            text: ''
+                        }
+                    },
+                    plotOptions: {
+                        series: {
+                            colorByPoint: true,
+                            point: {
+                                events: {
+                                    click: function () {
+                                        var clickedIp = ipArray[this.index];
+                                        DETAIL_IP(clickedIp);
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    colors: colorArray,
+                    series: [{
+                        name: 'Total Request',
+                        data: requestCountArray
+                    }]
+                });
+
+                Highcharts.chart('container_chart2', {
+                    chart: {
+                        height: 450,
+                        spacingTop: 25,
+                        spacingBottom: 0,
+                        spacingLeft: 0,
+                        spacingRight: 0,
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    title: {
+                        text: '',
+                    },
+                    xAxis: {
+                        categories: distinctSourceIP,
+                        min: 1,
+                        max: 15,
+                        scrollbar: {
+                            enabled: true
+                        },
+                        labels: {
+                            rotation: 90,
+                            align: 'left',
+                            style: {
+                                fontSize: '12px'
+                            }
+                        },
+                    },
+                    yAxis: {
+                        title: {
+                            text: 'Total Request'
+                        }
+                    },
+                    tooltip: {
+                        valueSuffix: ''
+                    },
+                    plotOptions: {
+                        series: {
+                            borderRadius: '25%',
+                            point: {
+                                events: {
+                                    click: function () {
+                                        var clickedIp = ipArray[this.index];
+                                        DETAIL_IP(clickedIp);
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    series: [{
+                        type: 'column',
+                        name: 'GET',
+                        data: ACTIVITY_COUNT_GET
+                    }, {
+                        type: 'column',
+                        name: 'POST',
+                        data: ACTIVITY_COUNT_POST
+                    }, {
+                        type: 'line',
+                        step: 'center',
+                        name: 'Avg. Min',
+                        data: ACTIVITY_COUNT_AVG,
+                        marker: {
+                            lineWidth: 2,
+                            lineColor: getRandomColor(),
+                            fillColor: 'white'
+                        }
+                    }, {
+                        type: 'pie',
+                        name: 'Total',
+                        data: [{
+                            name: 'GET',
+                            y: sumGET,
+                            color: Highcharts.getOptions().colors[0], // 2020 color
+                            dataLabels: {
+                                enabled: true,
+                                distance: -50,
+                                format: 'Tot. {point.total}',
+                                style: {
+                                    fontSize: '12px'
+                                }
+                            }
+                        }, {
+                            name: 'POST',
+                            y: sumPOST,
+                            color: Highcharts.getOptions().colors[1] // 2021 color
+                        }],
+                        center: [75, 65],
+                        size: 100,
+                        innerSize: '70%',
+                        showInLegend: false,
+                        dataLabels: {
+                            enabled: false
+                        }
+                    }]
+                });
+
+                Highcharts.chart('container_chart3', {
+                    chart: {
+                        type: 'heatmap',
+                        height: 450
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    title: {
+                        text: '',
+                    },
+                    accessibility: {
+                        landmarkVerbosity: 'one'
+                    },
+                    tooltip: {
+                        enabled: true,
+                        outside: true,
+                        zIndex: 20,
+                        headerFormat: '',
+                        pointFormat: '{#unless point.custom.empty}{point.date:%A, %b %e, %Y}{/unless}',
+                        nullFormat: 'No data'
+                    },
+                    xAxis: {
+                        categories: currentMonthWeekdays,
+                        opposite: true,
+                        lineWidth: 26,
+                        offset: 13,
+                        lineColor: 'rgba(27, 26, 37, 0.2)',
+                        labels: {
+                            rotation: 0,
+                            y: 20,
+                            style: {
+                                textTransform: 'uppercase',
+                                fontWeight: 'bold'
+                            }
+                        },
+                        accessibility: {
+                            description: 'weekdays',
+                            rangeDescription: 'X Axis is showing all 7 days of the week, starting with Sunday.'
+                        }
+                    },
+                    yAxis: {
+                        min: 0,
+                        max: 5,
+                        accessibility: {
+                            description: 'weeks'
+                        },
+                        visible: false
+                    },
+                    legend: {
+                        align: 'right',
+                        layout: 'vertical',
+                        verticalAlign: 'middle'
+                    },
+                    colorAxis: {
+                        min: 0,
+                        stops: [
+                            [0.2, 'lightblue'],
+                            [0.4, '#CBDFC8'],
+                            [0.6, '#F3E99E'],
+                            [0.9, '#F9A05C']
+                        ],
+                        labels: {
+                            format: '{value} Total Records'
+                        }
+                    },
+                    series: [{
+                        keys: ['x', 'y', 'value', 'date', 'id'],
+                        data: currentMonthChartData,
+                        nullColor: 'rgba(196, 196, 196, 0.2)',
+                        borderWidth: 2,
+                        borderColor: 'rgba(196, 196, 196, 0.2)',
+                        dataLabels: [{
+                            enabled: true,
+                            format: '{#unless point.custom.empty}<span style="font-size: 8pt;"><b>{point.value}</b></span>{/unless}',
+                            style: {
+                                textOutline: 'none',
+                                fontWeight: 'normal',
+                            },
+                            y: 4
+                        }, {
+                            enabled: true,
+                            align: 'left',
+                            verticalAlign: 'top',
+                            format: '{#unless point.custom.empty}{point.custom.monthDay}{/unless}',
+                            backgroundColor: 'whitesmoke',
+                            padding: 2,
+                            style: {
+                                textOutline: 'none',
+                                color: 'rgba(70, 70, 92, 1)',
+                                fontSize: '0.8rem',
+                                fontWeight: 'bold',
+                                opacity: 0.5
+                            },
+                            x: 1,
+                            y: 1
+                        }]
+                    }]
+                });
+
+                Highcharts.chart('container_chart4', {
+                    chart: {
+                        type: 'column',
+                        height: 450
+                    },
+                    title: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: TimeStart,
+                        labels: {
+                            rotation: 90,
+                            align: 'left',
+                            style: {
+                                fontSize: '12px'
+                            }
+                        },
+                    },
+                    yAxis: {
+                        min: 0,
+                        title: {
+                            text: 'Count trophies'
+                        },
+                        stackLabels: {
+                            enabled: true
+                        }
+                    },
+                    legend: {
+                        align: 'left',
+                        x: 70,
+                        verticalAlign: 'top',
+                        y: 70,
+                        floating: true,
+                        backgroundColor:
+                            Highcharts.defaultOptions.legend.backgroundColor || 'white',
+                        borderColor: '#CCC',
+                        borderWidth: 1,
+                        shadow: false
+                    },
+                    tooltip: {
+                        headerFormat: '<b>{point.x}</b><br/>',
+                        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+                    },
+                    plotOptions: {
+                        column: {
+                            stacking: 'normal',
+                            dataLabels: {
+                                enabled: true
+                            }
+                        }
+                    },
+                    series: [{
+                        name: 'GET',
+                        data: ActivityGet
+                    }, {
+                        name: 'POST',
+                        data: ActivityPost
+                    }, {
+                        name: 'OTHER',
+                        data: ActivityOther
+                    }]
+                });
+
+                Highcharts.chart('container_chart5', {
+                    chart: {
+                        type: 'bar',
+                        height: 450,
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    title: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: APP_NAME,
+                        min: 1,
+                        max: 15,
+                        scrollbar: {
+                            enabled: true
+                        },
+                    },
+                    yAxis: {
+                        title: {
+                            text: ''
+                        }
+                    },
+                    plotOptions: {
+                        series: {
+                            colorByPoint: true,
+                            point: {
+                                events: {
+                                    click: function () {
+                                        var APP_NAMEs = APP_NAME[this.index];
+                                        DETAIL_APP(APP_NAMEs);
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    colors: colorArray,
+                    series: [{
+                        name: 'Total Request',
+                        data: TOTAL_REQUEST
+                    }]
+                });
+
+                Highcharts.chart('container_chart6', {
+                    chart: {
+                        type: 'bar',
+                        height: 450,
+                    },
+                    credits: {
+                        enabled: false
+                    },
+                    title: {
+                        text: ''
+                    },
+                    xAxis: {
+                        categories: USERAGENT,
+                        min: 1,
+                        max: 15,
+                        scrollbar: {
+                            enabled: true
+                        },
+                    },
+                    yAxis: {
+                        title: {
+                            text: ''
+                        }
+                    },
+                    plotOptions: {
+                        series: {
+                            colorByPoint: true
+                        }
+                    },
+                    colors: colorArray,
+                    series: [{
+                        name: 'Total Request',
+                        data: TOTAL_REQUEST_2
+                    }]
+                });
+            },
+            error: function (request, status, error) {
+
+            }
+        });
+    }
+
+    function DETAIL_IP(IP) {
+        var url = '@Url.Action("Detail_Ip", "Report", new { IP = "__IP__" })';
+        url = url.replace('__IP__', encodeURIComponent(IP));
+        window.location.href = url;
+    }
+
+    function DETAIL_APP(APP) {
+        var url = '@Url.Action("Detail_App", "Report", new { IP = "__APP__" })';
+        url = url.replace('__APP__', encodeURIComponent(APP));
+        alert('Due to various application name, development still continue for this report.')
+    }
+
+</script>

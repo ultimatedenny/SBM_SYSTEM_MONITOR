@@ -1,0 +1,371 @@
+﻿@*@using CaptchaMvc.HtmlHelpers
+@using CaptchaMvc;*@
+@using SBM_SYSTEM_MONITOR.Models
+@using BotDetect.Web.Mvc;
+@model LoginModel
+
+@{
+    ViewBag.Title = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Login - SBM SYSTEM MONITOR</title>
+    <link rel="shortcut icon" type="image/x-icon" href="~/Theme/RFQ/LOGO1.png">
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport" />
+    <link rel="stylesheet" href="~/Theme/RFQ/new-login-assets/bower_components/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Theme/RFQ/new-login-assets/bower_components/font-awesome/css/font-awesome.min.css" />
+    <link rel="stylesheet" href="~/Theme/RFQ/new-login-assets/bower_components/Ionicons/css/ionicons.min.css" />
+    <link rel="stylesheet" href="~/Theme/RFQ/new-login-assets/dist/css/AdminLTE.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/Theme/RFQ/new-login-assets/dist/css/additional.css" />
+    <link rel="stylesheet" href="~/Theme/RFQ/new-login-assets/dist/css/new_login_style.css" />
+    <link href="@BotDetect.Web.CaptchaUrls.Absolute.LayoutStyleSheetUrl" rel="stylesheet" type="text/css" />
+    <link href="~/Theme/RFQ/new-login-assets/toastr/toastr.min.css" rel="stylesheet" />
+    <script src="~/Theme/RFQ/new-login-assets/toastr/jquery.min.js"></script>
+    <script src="~/Theme/RFQ/new-login-assets/toastr/toastr.min.js"></script>
+
+    <script src="~/Theme/RFQ/sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="~/Theme/RFQ/sweetalert2.min.css">
+
+    <script>
+        function showError(message) {
+            toastr["error"](message + "");
+        }
+        function showWarning(message) {
+            toastr["warning"](message + "");
+        }
+        function showSuccess(message) {
+            toastr["success"](message + "");
+        }
+        //document.addEventListener('wheel', function (e) {
+        //    if (e.ctrlKey === true) {
+        //        e.preventDefault();
+        //    }
+        //});
+        //document.addEventListener('touchmove', function (e) {
+        //    e.preventDefault();
+        //}, { passive: false });
+
+        //document.addEventListener('keydown', function (event) {
+        //    if (event.ctrlKey) {
+        //        Hidden();
+        //    }
+        //    if (event.key === 'PrintScreen' || event.key === 'PrtScn' || event.key === 'PrtSc') {
+        //        Hidden();
+        //    }
+        //    if (event.key === 'Alt' || event.key === 'Meta') {
+        //        Hidden();
+        //    }
+        //});
+
+        //document.addEventListener('contextmenu', function (event) {
+        //    Hidden();
+        //});
+
+        //document.addEventListener('mousemove', function (event) {
+        //    var mouseX = event.clientX;
+        //    var mouseY = event.clientY;
+        //    var screenWidth = window.innerWidth;
+        //    var screenHeight = window.innerHeight;
+        //    if (mouseX < 0 || mouseY < 0 || mouseX > screenWidth || mouseY > screenHeight) {
+        //        Hidden();
+        //    }
+        //});
+
+        //window.addEventListener('blur', function () {
+        //    Hidden();
+        //});
+
+        //window.addEventListener('focus', function () {
+        //    Show();
+        //});
+
+        //document.addEventListener('click', function (event) {
+        //    var hiddenElement = document.getElementById('body_content');
+        //    if (hiddenElement && hiddenElement.style.visibility === 'hidden') {
+        //        var rect = hiddenElement.getBoundingClientRect();
+        //        if (
+        //            event.clientX >= rect.left &&
+        //            event.clientX <= rect.right &&
+        //            event.clientY >= rect.top &&
+        //            event.clientY <= rect.bottom
+        //        ) {
+        //            Show();
+        //            RemoveWTR();
+        //        }
+        //    }
+        //    RemoveWTR();
+        //});
+
+        //function Hidden() {
+        //    var elementToRemove = document.getElementById('body_content');
+        //    if (elementToRemove) {
+        //        elementToRemove.style.visibility = 'hidden';
+        //    }
+        //    const element = document.getElementById('login-form');
+        //    if (element) {
+        //        element.style.visibility = 'hidden';
+        //    }
+        //    CreateWTR();
+        //}
+
+        //function Show() {
+        //    RemoveWTR();
+        //    var elementToRemove = document.getElementById('body_content');
+        //    if (elementToRemove) {
+        //        elementToRemove.style.visibility = 'visible';
+        //    }
+        //    const element = document.getElementById('login-form');
+        //    if (element) {
+        //        element.style.visibility = 'visible';
+        //    }
+        //}
+
+        //function CreateWTR() {
+        //    const canvas = document.createElement('canvas');
+        //    document.body.appendChild(canvas);
+        //    canvas.width = window.innerWidth;
+        //    canvas.height = window.innerHeight;
+        //    const ctx = canvas.getContext('2d');
+        //    document.body.style.margin = '0';
+        //    document.body.style.overflow = 'hidden';
+        //    document.documentElement.style.height = '100%';
+        //    canvas.style.position = 'fixed';
+        //    canvas.style.top = '0';
+        //    canvas.style.left = '0';
+        //    canvas.style.display = 'block';
+        //    canvas.style.margin = 'auto';
+        //    ctx.fillStyle = '#f0f0f0';
+        //    ctx.fillRect(0, 0, canvas.width, canvas.height);
+        //    const textLines = [
+        //        'This content is confidential.',
+        //        'Taking screenshots is prohibited.',
+        //        '© PT Shimano Batam.'
+        //    ];
+        //    ctx.font = '24px Arial';
+        //    ctx.fillStyle = '#333';
+        //    ctx.textAlign = 'center';
+        //    ctx.textBaseline = 'middle';
+        //    const totalTextHeight = textLines.length * 30;
+        //    let currentY = (canvas.height - totalTextHeight) / 2;
+        //    textLines.forEach(line => {
+        //        ctx.fillText(line, canvas.width / 2, currentY);
+        //        currentY += 30;
+        //    });
+        //}
+
+        //function RemoveWTR() {
+        //    const canvasToRemove = document.querySelector('canvas[style="position: fixed; top: 0px; left: 0px; display: block; margin: auto;"]');
+        //    if (canvasToRemove) {
+        //        canvasToRemove.parentNode.removeChild(canvasToRemove);
+        //    }
+        //}
+
+        function checkElement() {
+            var element = document.querySelector('a[href="//captcha.org/captcha.html?asp.net"]');
+            if (element) {
+                element.parentNode.removeChild(element);
+            } else {
+                setTimeout(checkElement, 1000);
+            }
+        }
+
+        // Start checking for the element
+        checkElement();
+    </script>
+    <style>
+        td {
+            text-transform: uppercase !important;
+        }
+
+        th {
+            text-transform: uppercase !important;
+        }
+
+        * {
+            text-transform: uppercase !important;
+        }
+
+        .custom-pullover {
+            background-image: linear-gradient(to right, #115C98, #1E9AD6);
+            width: 20vw;
+            padding: 1.5vw 0vw 1.5vw 2vw;
+            color: #fff;
+            margin-bottom: 1vw;
+            margin-top: 2vw;
+            border-radius: 0vw 2.5vw 2.5vw 0vw;
+            font-size: 1.5vw;
+            line-height: 1.5vw;
+        }
+
+
+        .login,
+        .image {
+            min-height: 100vh;
+        }
+
+        .bg-image {
+            height: 100vh;
+            background-image: url('https://www.simpson-associates.co.uk/wp-content/uploads/2016/04/4-compressor.jpg');
+            background-size: cover;
+            background-position: center center;
+        }
+
+        .bg-image2 {
+            height: 100vh;
+            opacity:50%;
+            background-color: red;
+            background-size: cover;
+            background-position: center center;
+        }
+
+    </style>
+
+</head>
+
+<body>
+    <div class="container-fluid full-height" id="body_content">
+        <div class="row full-height">
+            <div class="col-md-12 full-height">
+                <div class="row full-height">
+                    <div class="col-md-6 custom-side-page bg-image" style="opacity:90%">
+                        <div class="row full-height">
+                            <div class="col-md-12">
+                                <div class="text-center custom-img-container desktopcontent">
+                                  
+                                </div>
+
+                                <div class="mobilecontent custom-mobile-header" style="display: none;">
+                                    <div style="height: 360px;">
+                                        <div class="text-center custom-mobile-img-container">
+                                            <img src="new-login-assets/Images/mobile-logo.png" alt="" class="img-fluid img-logo-mobile">
+                                            <div class="custom-mobile-title">
+                                                <h1><b>SYSTEM MONITOR</b></h1>
+                                                <div>
+                                                    -
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 custom-login-page">
+                        <div class="row full-height">
+                            <div class="col-md-12 desktopcontent">
+                                <div class="custom-pullover">Welcome back</div>
+                            </div>
+                            <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 col-sm-12">
+                                <div class="desktopcontent">
+                                    <h5 class="custom-app-title"><b>SYSTEM MONITOR</b></h5>
+                                    <b>Log in to access your account</b>
+                                </div>
+                                <div class="login-form" id="login-form">
+
+                                    @using (Html.BeginForm("Login", "Authentication", FormMethod.Post))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        <div class="form-group has-feedback">
+                                            @Html.LabelFor(model => model.WINDOWS_ID, "WINDOWS ACCOUNT")
+                                            <div class="input-group">
+                                                @Html.EditorFor(model => model.WINDOWS_ID, new { htmlAttributes = new { @class = "form-control custom-input", placeholder = "Enter your Windows ID", autocomplete = "off" } })
+                                                <div class="input-group-addon icon-group">
+                                                    <span class="glyphicon glyphicon-user icon-login"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group has-feedback">
+                                            @Html.LabelFor(model => model.PASSWORD, "WINDOWS PASSWORD")
+                                            <div class="input-group">
+                                                @Html.PasswordFor(model => model.PASSWORD, new { @class = "form-control custom-input", placeholder = "Enter your password", autocomplete = "off" })
+                                                <div class="input-group-addon icon-group">
+                                                    <span class="fa fa-lock icon-login"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @*@Html.Captcha(4)*@
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                @{
+                                                    MvcCaptcha exampleCaptcha = new MvcCaptcha("ExampleCaptcha");
+                                                    exampleCaptcha.UserInputID = "CaptchaCode";
+                                                }
+                                                @Html.Captcha(exampleCaptcha)
+                                            </div>
+                                            <div class="col-md-6">
+                                                @*@Html.Label("CaptchaCode", "Retype the code from the picture:")*@
+                                                @Html.TextBox("CaptchaCode", null, new { @class = "form-control custom-input", placeholder = "Enter Code", autocomplete = "off" })
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <button type="submit" class="btn btn-primary custom-btn-rounded form-control btn-block mb-4">Sign In</button>
+                                    }
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    @{
+        if (TempData["FAILED"] != null)
+        {
+            <script type="text/javascript">
+            alert('@TempData["FAILED"]')
+            </script>
+        }
+        if (TempData["SUCCESS"] != null)
+        {
+            <script type="text/javascript">
+            alert('@TempData["SUCCESS"]')
+            </script>
+        }
+        if (TempData["RedirectUrl"] != null)
+        {
+            <script>
+
+                var redirectUrl = '@TempData["RedirectUrl"]';
+                var newWindow = window.open(redirectUrl, '_blank');
+
+                if (newWindow) {
+                    var redirectUrl = '@TempData["RedirectUrl"]';
+                    var powerBiWindow = window.open("https://app.powerbi.com/autoAuthLogin?noSignUpCheck=1&ctid=352f6edb-0329-4d69-b27a-726fbecb2c5f", '_blank');
+                    setTimeout(function() {
+			            powerBiWindow.close();
+			            window.location.href = '@Url.Action("Login", "Authentication")';
+                    }, 3500);
+                } else {
+                    clearAllCookies();
+                }
+
+                function clearAllCookies() {
+                    var cookies = document.cookie.split("; ");
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookieParts = cookies[i].split("=");
+                        var cookieName = cookieParts[0];
+                        document.cookie = cookieName + "=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                    }
+                    PopAlert();
+                }
+
+            </script>
+        }
+    }
+
+</body>
+</html>
